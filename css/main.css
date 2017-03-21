@@ -64,8 +64,8 @@ body { height: 100%; position: relative; }
 .about table { font-weight: lighter; }
 .about table th, .about table td { vertical-align: middle; }
 .about table th { font-weight: normal; }
-.about a { color: #a31621; font-weight: bold; }
-.about a:hover { color: #111; }
+.about a { color: #474b98; font-weight: bold; }
+.about a:hover { color: #5E62B4; }
 .about img { max-height: 10rem; margin-bottom: 2rem; }
 
 .services { width: 100%; padding: 6rem 0; background: white; }
