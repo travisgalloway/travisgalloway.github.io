@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://travisgalloway.com/sitemap-index.xml

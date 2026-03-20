@@ -1,0 +1,48 @@
+---
+import Globe from './Globe.svelte';
+---
+
+<div class="globe-stage">
+  <div class="stage-content">
+    <slot />
+  </div>
+  <div class="stage-globe">
+    <Globe client:load size={440} />
+  </div>
+</div>
+
+<style>
+  .globe-stage {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    max-width: var(--max-w-wide, 1200px);
+    margin: 0 auto;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .stage-content {
+    min-width: 0;
+  }
+
+  .stage-globe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .globe-stage {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stage-globe {
+      padding-right: 0;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+  }
+</style>
