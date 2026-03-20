@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.svelte';
+import GlobeStage from '../components/GlobeStage.astro';
+import Hero from '../components/Hero.svelte';
+import About from '../components/About.svelte';
+import Experience from '../components/Experience.svelte';
+import Projects from '../components/Projects.svelte';
+import Education from '../components/Education.svelte';
+import Contact from '../components/Contact.svelte';
+---
+
+<Base>
+  <Nav client:load />
+  <main>
+    <Hero client:load />
+    <GlobeStage>
+      <About />
+    </GlobeStage>
+    <Experience />
+    <Education />
+    <Projects />
+    <Contact />
+  </main>
+</Base>

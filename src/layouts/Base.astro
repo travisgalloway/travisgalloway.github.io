@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Travis Galloway',
+  description = 'Senior Engineering Leader. Building platforms and teams at scale.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Travis Galloway" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://travisgalloway.com" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Travis Galloway" />
+    <meta property="og:image" content="https://travisgalloway.com/images/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://travisgalloway.com/images/og.jpg" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23166088'/%3E%3Ctext x='16' y='22.5' font-family='Helvetica,Arial,sans-serif' font-size='16' font-weight='bold' fill='white' text-anchor='middle'%3ETG%3C/text%3E%3C/svg%3E" />
+    <title>{title}</title>
+    <script is:inline>
+      (function() {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    <link rel="canonical" href="https://travisgalloway.com" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Travis Galloway",
+      "url": "https://travisgalloway.com",
+      "jobTitle": "Senior Engineering Manager",
+      "description": "Senior Engineering Leader. Building platforms and teams at scale.",
+      "worksFor": { "@type": "Organization", "name": "Target" },
+      "sameAs": [
+        "https://linkedin.com/in/travis-galloway",
+        "https://github.com/travisgalloway"
+      ]
+    })} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
