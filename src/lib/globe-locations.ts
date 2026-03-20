@@ -27,7 +27,7 @@ export interface PhotoPin extends PinBase {
   category: 'photo';
   photoId: string;
   thumbUrl: string;
-  city: string;
+  city: string | null;
   state: string | null;
   country: string;
   countryCode: string;
@@ -170,7 +170,7 @@ export function getPhotoPins(manifest: { photos: Array<{ id: string; thumb: stri
       category: 'photo' as const,
       photoId: p.id,
       thumbUrl: p.thumb,
-      city: p.city!,
+      city: p.city ?? null,
       state: p.state ?? null,
       country: p.country!,
       countryCode: p.countryCode ?? nameToCode.get(p.country!) ?? '',

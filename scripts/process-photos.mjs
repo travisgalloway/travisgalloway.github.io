@@ -74,7 +74,7 @@ async function main() {
   const files = fs.readdirSync(PHOTOS_DIR).filter((f) => {
     const ext = path.extname(f).toLowerCase();
     return ['.jpeg', '.jpg', '.png'].includes(ext) && !f.startsWith('.');
-  });
+  }).sort();
 
   console.log(`Found ${files.length} photos to process`);
 

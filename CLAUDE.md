@@ -35,7 +35,7 @@ All content (work experience, projects, contact info) is hardcoded as data array
 
 `src/styles/global.css` defines CSS custom properties:
 - Colors: `--c-bg`, `--c-surface`, `--c-text`, `--c-accent`, `--c-border`
-- Fonts: `--font-body` (DM Sans), `--font-display` (Source Serif 4)
+- Fonts: `--font-body`, `--font-display` (both mapped to the system UI font stack)
 - Spacing scale: `--space-xs` through `--space-xl`
 - Max content width: `--max-w: 680px`
 - Dark mode via `@media (prefers-color-scheme: dark)`
