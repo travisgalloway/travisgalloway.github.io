@@ -1,16 +1,38 @@
+<script>
+  const links = [
+    {
+      name: "GitHub",
+      logo: "/images/github.svg",
+      href: "https://github.com/travisgalloway",
+      display: "github.com/travisgalloway",
+    },
+    {
+      name: "LinkedIn",
+      logo: "/images/linkedin.svg",
+      href: "https://linkedin.com/in/travis-galloway",
+      display: "linkedin.com/in/travis-galloway",
+    },
+  ];
+</script>
+
 <section id="contact" class="contact fade-in-up">
   <div class="inner">
     <h2>Connect</h2>
-    <div class="links">
-      <a
-        href="https://linkedin.com/in/travis-galloway"
-        target="_blank"
-        rel="noopener noreferrer">LinkedIn</a
-      >
-      <a href="https://github.com/travisgalloway" target="_blank" rel="noopener noreferrer"
-        >GitHub</a
-      >
-    </div>
+    {#each links as link}
+      <a class="link" href={link.href} target="_blank" rel="noopener noreferrer">
+        <img
+          src={link.logo}
+          alt="{link.name} logo"
+          width="32"
+          height="32"
+          class="link-logo"
+        />
+        <div class="link-info">
+          <h3>{link.name}</h3>
+          <p>{link.display}</p>
+        </div>
+      </a>
+    {/each}
   </div>
 </section>
 
@@ -36,33 +58,42 @@
     font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: -0.02em;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-lg);
+    color: var(--c-text);
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: var(--space-sm);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--c-border-light);
+  }
+
+  .link:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .link-logo {
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--c-text);
   }
 
   p {
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: var(--c-text-muted);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    max-width: 480px;
-  }
-
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    font-size: 0.9rem;
-  }
-
-  .links a {
-    color: var(--c-text-muted);
-    transition: color 0.2s ease;
-  }
-
-  .links a:hover {
-    color: var(--c-accent);
-    opacity: 1;
+    line-height: 1.5;
   }
 
   footer {

@@ -27,9 +27,9 @@
       "countryCode": "QA"
     },
     {
-      "id": "unknown-1",
-      "thumb": "/images/travels/thumbs/unknown-1.jpeg",
-      "full": "/images/travels/unknown-1.jpeg",
+      "id": "mgahinga-uganda-1",
+      "thumb": "/images/travels/thumbs/mgahinga-uganda-1.jpeg",
+      "full": "/images/travels/mgahinga-uganda-1.jpeg",
       "orientation": "v",
       "description": "Mgahinga Gorilla National Park",
       "city": null,
@@ -53,9 +53,9 @@
       "countryCode": "AU"
     },
     {
-      "id": "unknown-2",
-      "thumb": "/images/travels/thumbs/unknown-2.jpeg",
-      "full": "/images/travels/unknown-2.jpeg",
+      "id": "antarctic-peninsula-antarctica-1",
+      "thumb": "/images/travels/thumbs/antarctic-peninsula-antarctica-1.jpeg",
+      "full": "/images/travels/antarctic-peninsula-antarctica-1.jpeg",
       "orientation": "h",
       "description": "Antarctic Peninsula",
       "city": null,
@@ -79,9 +79,9 @@
       "countryCode": "PR"
     },
     {
-      "id": "unknown-3",
-      "thumb": "/images/travels/thumbs/unknown-3.jpeg",
-      "full": "/images/travels/unknown-3.jpeg",
+      "id": "tonto-united-states-1",
+      "thumb": "/images/travels/thumbs/tonto-united-states-1.jpeg",
+      "full": "/images/travels/tonto-united-states-1.jpeg",
       "orientation": "h",
       "description": "Tonto National Forest",
       "city": null,
@@ -118,9 +118,9 @@
       "countryCode": "TR"
     },
     {
-      "id": "unknown-4",
-      "thumb": "/images/travels/thumbs/unknown-4.jpeg",
-      "full": "/images/travels/unknown-4.jpeg",
+      "id": "kings-canyon-australia-1",
+      "thumb": "/images/travels/thumbs/kings-canyon-australia-1.jpeg",
+      "full": "/images/travels/kings-canyon-australia-1.jpeg",
       "orientation": "h",
       "description": "King's Canyon",
       "city": null,
@@ -157,9 +157,9 @@
       "countryCode": "AU"
     },
     {
-      "id": "unknown-5",
-      "thumb": "/images/travels/thumbs/unknown-5.jpeg",
-      "full": "/images/travels/unknown-5.jpeg",
+      "id": "magnetic-island-australia-1",
+      "thumb": "/images/travels/thumbs/magnetic-island-australia-1.jpeg",
+      "full": "/images/travels/magnetic-island-australia-1.jpeg",
       "orientation": "h",
       "description": "Magnetic Island",
       "city": null,
@@ -183,9 +183,9 @@
       "countryCode": "TR"
     },
     {
-      "id": "unknown-6",
-      "thumb": "/images/travels/thumbs/unknown-6.jpeg",
-      "full": "/images/travels/unknown-6.jpeg",
+      "id": "ephesus-turkey-1",
+      "thumb": "/images/travels/thumbs/ephesus-turkey-1.jpeg",
+      "full": "/images/travels/ephesus-turkey-1.jpeg",
       "orientation": "v",
       "description": "Ruins of Ephesus",
       "city": null,
@@ -274,9 +274,9 @@
       "countryCode": "CU"
     },
     {
-      "id": "unknown-7",
-      "thumb": "/images/travels/thumbs/unknown-7.jpeg",
-      "full": "/images/travels/unknown-7.jpeg",
+      "id": "chinatown-singapore-1",
+      "thumb": "/images/travels/thumbs/chinatown-singapore-1.jpeg",
+      "full": "/images/travels/chinatown-singapore-1.jpeg",
       "orientation": "v",
       "description": "Chinatown Hawker Center",
       "city": null,
@@ -287,9 +287,9 @@
       "countryCode": "SG"
     },
     {
-      "id": "unknown-8",
-      "thumb": "/images/travels/thumbs/unknown-8.jpeg",
-      "full": "/images/travels/unknown-8.jpeg",
+      "id": "vinales-cuba-1",
+      "thumb": "/images/travels/thumbs/vinales-cuba-1.jpeg",
+      "full": "/images/travels/vinales-cuba-1.jpeg",
       "orientation": "h",
       "description": "Viñales Valley",
       "city": "",
@@ -300,9 +300,9 @@
       "countryCode": "CU"
     },
     {
-      "id": "unknown-9",
-      "thumb": "/images/travels/thumbs/unknown-9.jpeg",
-      "full": "/images/travels/unknown-9.jpeg",
+      "id": "cayo-jutias-cuba-1",
+      "thumb": "/images/travels/thumbs/cayo-jutias-cuba-1.jpeg",
+      "full": "/images/travels/cayo-jutias-cuba-1.jpeg",
       "orientation": "h",
       "description": "Cayo Jutías",
       "city": null,
@@ -313,9 +313,9 @@
       "countryCode": "CU"
     },
     {
-      "id": "unknown-10",
-      "thumb": "/images/travels/thumbs/unknown-10.jpeg",
-      "full": "/images/travels/unknown-10.jpeg",
+      "id": "apache-sitgreaves-united-states-1",
+      "thumb": "/images/travels/thumbs/apache-sitgreaves-united-states-1.jpeg",
+      "full": "/images/travels/apache-sitgreaves-united-states-1.jpeg",
       "orientation": "h",
       "description": "Apache-Sitgreaves National Forest",
       "city": null,
@@ -352,9 +352,9 @@
       "countryCode": "KE"
     },
     {
-      "id": "unknown-11",
-      "thumb": "/images/travels/thumbs/unknown-11.jpeg",
-      "full": "/images/travels/unknown-11.jpeg",
+      "id": "kibale-uganda-1",
+      "thumb": "/images/travels/thumbs/kibale-uganda-1.jpeg",
+      "full": "/images/travels/kibale-uganda-1.jpeg",
       "orientation": "h",
       "description": "Kibale National Park",
       "city": null,
@@ -365,9 +365,9 @@
       "countryCode": "UG"
     },
     {
-      "id": "unknown-12",
-      "thumb": "/images/travels/thumbs/unknown-12.jpeg",
-      "full": "/images/travels/unknown-12.jpeg",
+      "id": "queen-elizabeth-uganda-1",
+      "thumb": "/images/travels/thumbs/queen-elizabeth-uganda-1.jpeg",
+      "full": "/images/travels/queen-elizabeth-uganda-1.jpeg",
       "orientation": "h",
       "description": "Queen Elizabeth National Park",
       "city": null,
@@ -378,9 +378,9 @@
       "countryCode": "UG"
     },
     {
-      "id": "unknown-13",
-      "thumb": "/images/travels/thumbs/unknown-13.jpeg",
-      "full": "/images/travels/unknown-13.jpeg",
+      "id": "roadblock-uganda-1",
+      "thumb": "/images/travels/thumbs/roadblock-uganda-1.jpeg",
+      "full": "/images/travels/roadblock-uganda-1.jpeg",
       "orientation": "v",
       "description": "Roadblock",
       "city": null,
@@ -456,9 +456,9 @@
       "countryCode": "TZ"
     },
     {
-      "id": "unknown-14",
-      "thumb": "/images/travels/thumbs/unknown-14.jpeg",
-      "full": "/images/travels/unknown-14.jpeg",
+      "id": "kilimanjaro-tanzania-1",
+      "thumb": "/images/travels/thumbs/kilimanjaro-tanzania-1.jpeg",
+      "full": "/images/travels/kilimanjaro-tanzania-1.jpeg",
       "orientation": "h",
       "description": "Mount Kilimanjaro",
       "city": null,
@@ -469,9 +469,9 @@
       "countryCode": "TZ"
     },
     {
-      "id": "unknown-15",
-      "thumb": "/images/travels/thumbs/unknown-15.jpeg",
-      "full": "/images/travels/unknown-15.jpeg",
+      "id": "kilimanjaro-tanzania-2",
+      "thumb": "/images/travels/thumbs/kilimanjaro-tanzania-2.jpeg",
+      "full": "/images/travels/kilimanjaro-tanzania-2.jpeg",
       "orientation": "h",
       "description": "Mount Kilimanjaro National Park",
       "city": null,
@@ -521,9 +521,9 @@
       "countryCode": "SG"
     },
     {
-      "id": "unknown-16",
-      "thumb": "/images/travels/thumbs/unknown-16.jpeg",
-      "full": "/images/travels/unknown-16.jpeg",
+      "id": "ha-long-bay-vietnam-1",
+      "thumb": "/images/travels/thumbs/ha-long-bay-vietnam-1.jpeg",
+      "full": "/images/travels/ha-long-bay-vietnam-1.jpeg",
       "orientation": "h",
       "description": "Ha Long Bay",
       "city": null,
@@ -560,9 +560,9 @@
       "countryCode": "US"
     },
     {
-      "id": "unknown-17",
-      "thumb": "/images/travels/thumbs/unknown-17.jpeg",
-      "full": "/images/travels/unknown-17.jpeg",
+      "id": "dark-hedges-northern-ireland-1",
+      "thumb": "/images/travels/thumbs/dark-hedges-northern-ireland-1.jpeg",
+      "full": "/images/travels/dark-hedges-northern-ireland-1.jpeg",
       "orientation": "v",
       "description": "Dark Hedges",
       "city": null,
@@ -573,9 +573,9 @@
       "countryCode": "GB"
     },
     {
-      "id": "unknown-18",
-      "thumb": "/images/travels/thumbs/unknown-18.jpeg",
-      "full": "/images/travels/unknown-18.jpeg",
+      "id": "giants-causeway-northern-ireland-1",
+      "thumb": "/images/travels/thumbs/giants-causeway-northern-ireland-1.jpeg",
+      "full": "/images/travels/giants-causeway-northern-ireland-1.jpeg",
       "orientation": "h",
       "description": "Giant's Causeway",
       "city": null,
@@ -690,9 +690,9 @@
       "countryCode": "CL"
     },
     {
-      "id": "unknown-19",
-      "thumb": "/images/travels/thumbs/unknown-19.jpeg",
-      "full": "/images/travels/unknown-19.jpeg",
+      "id": "lake-country-chile-1",
+      "thumb": "/images/travels/thumbs/lake-country-chile-1.jpeg",
+      "full": "/images/travels/lake-country-chile-1.jpeg",
       "orientation": "h",
       "description": "Lake Country Fjords",
       "city": null,
@@ -716,9 +716,9 @@
       "countryCode": "CL"
     },
     {
-      "id": "unknown-20",
-      "thumb": "/images/travels/thumbs/unknown-20.jpeg",
-      "full": "/images/travels/unknown-20.jpeg",
+      "id": "winston-uma-1",
+      "thumb": "/images/travels/thumbs/winston-uma-1.jpeg",
+      "full": "/images/travels/winston-uma-1.jpeg",
       "orientation": "v",
       "description": "Winston & Uma",
       "city": null,
@@ -729,9 +729,9 @@
       "countryCode": null
     },
     {
-      "id": "unknown-21",
-      "thumb": "/images/travels/thumbs/unknown-21.jpeg",
-      "full": "/images/travels/unknown-21.jpeg",
+      "id": "torres-del-paine-chile-1",
+      "thumb": "/images/travels/thumbs/torres-del-paine-chile-1.jpeg",
+      "full": "/images/travels/torres-del-paine-chile-1.jpeg",
       "orientation": "h",
       "description": "Torres del Paine",
       "city": null,
@@ -768,9 +768,9 @@
       "countryCode": "AQ"
     },
     {
-      "id": "unknown-22",
-      "thumb": "/images/travels/thumbs/unknown-22.jpeg",
-      "full": "/images/travels/unknown-22.jpeg",
+      "id": "mgahinga-uganda-2",
+      "thumb": "/images/travels/thumbs/mgahinga-uganda-2.jpeg",
+      "full": "/images/travels/mgahinga-uganda-2.jpeg",
       "orientation": "h",
       "description": "Mgahinga Gorilla National Park",
       "city": null,

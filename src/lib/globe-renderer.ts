@@ -18,9 +18,7 @@ export interface GlobeTheme {
 }
 
 interface PinSize {
-  dotR: number;
-  ringR: number;
-  ringAlpha: number;
+  radius: number;
 }
 
 export interface ProjectedPin {
@@ -44,6 +42,22 @@ export interface CountryFeature {
 }
 
 export type ZoomState = 'default' | 'zooming' | 'zoomed';
+
+// FA location-dot duotone-thin SVG path data for canvas pin rendering
+const LOCATION_DOT_FILL_D = 'M144 252.6C144 157.5 222.5 80 320 80C417.5 80 496 157.5 496 252.6C496 307.6 468 369.9 432.1 426.8C396.5 483.1 354.6 531.7 329.9 558.6C324.4 564.6 315.6 564.6 310.2 558.6C285.4 531.7 243.5 483.1 207.9 426.8C172 370 144 307.6 144 252.6zM240 256C240 300.2 275.8 336 320 336C364.2 336 400 300.2 400 256C400 211.8 364.2 176 320 176C275.8 176 240 211.8 240 256z';
+const LOCATION_DOT_OUTLINE_D = 'M144 252.6C144 157.5 222.5 80 320 80C417.5 80 496 157.5 496 252.6C496 307.6 468 369.9 432.1 426.8C396.5 483.1 354.6 531.7 329.9 558.6C324.4 564.6 315.6 564.6 310.2 558.6C285.4 531.7 243.5 483.1 207.9 426.8C172 370 144 307.6 144 252.6zM320 64C214 64 128 148.4 128 252.6C128 371.9 248.2 514.9 298.4 569.4C310.2 582.2 329.8 582.2 341.6 569.4C391.8 514.9 512 371.9 512 252.6C512 148.4 426 64 320 64zM320 336C364.2 336 400 300.2 400 256C400 211.8 364.2 176 320 176C275.8 176 240 211.8 240 256C240 300.2 275.8 336 320 336zM256 256C256 220.7 284.7 192 320 192C355.3 192 384 220.7 384 256C384 291.3 355.3 320 320 320C284.7 320 256 291.3 256 256z';
+
+// Lazy-initialized Path2D (not available during SSR)
+let locationDotPaths: { fill: Path2D; outline: Path2D } | null = null;
+function getLocationDotPaths() {
+  if (!locationDotPaths) {
+    locationDotPaths = {
+      fill: new Path2D(LOCATION_DOT_FILL_D),
+      outline: new Path2D(LOCATION_DOT_OUTLINE_D),
+    };
+  }
+  return locationDotPaths;
+}
 
 const lightTheme: GlobeTheme = {
   ocean: '#dbe9ee',
@@ -86,6 +100,7 @@ export class GlobeRenderer {
   private size = 420;
   private dpr = 1;
   private highlightedPin: Pin | null = null;
+  private activePin: Pin | null = null;
 
   // State highlight data
   private livedStates: GeoJSON.MultiPolygon | null = null;
@@ -158,6 +173,10 @@ export class GlobeRenderer {
     this.highlightedPin = pin;
   }
 
+  setActivePin(pin: Pin | null) {
+    this.activePin = pin;
+  }
+
   setStateData(
     lived: GeoJSON.MultiPolygon | null,
     visited: GeoJSON.MultiPolygon | null,
@@ -208,6 +227,9 @@ export class GlobeRenderer {
     if (!coords) return null;
 
     for (const cf of this.countryFeatures) {
+      // Skip Antarctica — its huge polygon causes false positives.
+      // Still reachable via its travel pin or "View on Globe".
+      if (cf.name === 'Antarctica') continue;
       if (geoContains(cf.feature, coords)) {
         return cf;
       }
@@ -237,8 +259,8 @@ export class GlobeRenderer {
     this.projection.scale(scale);
   }
 
-  computeZoomScale(country: CountryFeature): number {
-    const ratio = 35 / Math.max(country.angularRadius, 0.1);
+  computeZoomScale(angularRadius: number): number {
+    const ratio = 35 / Math.max(angularRadius, 0.1);
     const clamped = Math.max(1.5, Math.min(10, ratio));
     return this.baseScale * clamped;
   }
@@ -415,7 +437,7 @@ export class GlobeRenderer {
   private getPinColor(pin: Pin): string {
     switch (pin.category) {
       case 'home': return this.theme.pinWork;
-      case 'studyAbroad': return this.theme.pinEducation;
+      case 'studyAbroad': return this.theme.pinTravel;
       case 'travel': return this.theme.pinTravel;
       case 'photo': return this.theme.pinPhoto;
     }
@@ -424,25 +446,17 @@ export class GlobeRenderer {
   private getPinSize(pin: Pin, highlighted: boolean): PinSize {
     if (highlighted) {
       switch (pin.category) {
-        case 'home':
-          return { dotR: 7, ringR: 12, ringAlpha: 0.7 };
-        case 'studyAbroad':
-          return { dotR: 5, ringR: 9, ringAlpha: 0.6 };
-        case 'travel':
-          return { dotR: 4, ringR: 7, ringAlpha: 0.5 };
-        case 'photo':
-          return { dotR: 4, ringR: 7, ringAlpha: 0.5 };
+        case 'home': return { radius: 7 };
+        case 'studyAbroad': return { radius: 4 };
+        case 'travel': return { radius: 4 };
+        case 'photo': return { radius: 4.5 };
       }
     }
     switch (pin.category) {
-      case 'home':
-        return { dotR: 6, ringR: 10, ringAlpha: 0.5 };
-      case 'studyAbroad':
-        return { dotR: 4, ringR: 7, ringAlpha: 0.4 };
-      case 'travel':
-        return { dotR: 2.5, ringR: 4.5, ringAlpha: 0.25 };
-      case 'photo':
-        return { dotR: 3, ringR: 5, ringAlpha: 0.3 };
+      case 'home': return { radius: 5 };
+      case 'studyAbroad': return { radius: 3 };
+      case 'travel': return { radius: 3 };
+      case 'photo': return { radius: 3.5 };
     }
   }
 
@@ -621,42 +635,28 @@ export class GlobeRenderer {
       if (!projected) continue;
 
       const [px, py] = projected;
-      const color = this.getPinColor(pin);
-      const isHighlighted = this.highlightedPin === pin;
-      const { dotR, ringR, ringAlpha } = this.getPinSize(pin, isHighlighted);
+      const isActive = this.activePin === pin;
+      const color = isActive ? '#fadf63' : this.getPinColor(pin);
+      const isHighlighted = this.highlightedPin === pin || isActive;
+      const { radius } = this.getPinSize(pin, isHighlighted);
 
-      const savedAlpha = ctx.globalAlpha;
+      // FA location-dot pin shape via Path2D
+      // viewBox 0 0 640 640, pin tip at ~(320, 569), head center at ~(320, 253)
+      const scale = (radius * 2) / 200; // map ~200 SVG units (head diameter) to pin size
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.scale(scale, scale);
+      ctx.translate(-320, -569); // move pin tip to origin
 
-      if (pin.category === 'photo') {
-        // Photo pins: small square marker
-        ctx.globalAlpha = opacity;
-        const half = dotR;
-        ctx.fillStyle = color;
-        ctx.fillRect(px - half, py - half, half * 2, half * 2);
+      const pinPaths = getLocationDotPaths();
+      ctx.globalAlpha = opacity;
+      ctx.fillStyle = color;
+      ctx.fill(pinPaths.fill);
+      ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+      ctx.lineWidth = 1 / scale;
+      ctx.stroke(pinPaths.outline);
 
-        // Outer ring as rounded square
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1.5;
-        ctx.globalAlpha = ringAlpha * opacity;
-        ctx.strokeRect(px - ringR, py - ringR, ringR * 2, ringR * 2);
-        ctx.globalAlpha = savedAlpha;
-      } else {
-        // Standard pins: circle
-        ctx.globalAlpha = opacity;
-        ctx.beginPath();
-        ctx.arc(px, py, dotR, 0, 2 * Math.PI);
-        ctx.fillStyle = color;
-        ctx.fill();
-
-        // Outer ring
-        ctx.beginPath();
-        ctx.arc(px, py, ringR, 0, 2 * Math.PI);
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1.5;
-        ctx.globalAlpha = ringAlpha * opacity;
-        ctx.stroke();
-        ctx.globalAlpha = savedAlpha;
-      }
+      ctx.restore();
     }
 
     ctx.globalAlpha = 1;
