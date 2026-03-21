@@ -341,7 +341,7 @@
         zoomedCountryName = '';
         zoomedCountryCode = '';
         zoomedCountryFeature = null;
-      lastPinTarget = null;
+        lastPinTarget = null;
         renderer.setZoomState('default', 0, '', '');
         startIdle();
       }
@@ -546,6 +546,7 @@
         if (pp.pin.category === 'photo') {
           const photoEntry = photoById.get(pp.pin.photoId);
           if (photoEntry) {
+            dismissCard();
             renderer.setActivePin(pp.pin);
             renderer.render();
             globeLightboxPhoto = photoEntry;
@@ -647,6 +648,7 @@
     clearDragResume();
     clearHover();
     dismissCard();
+    renderer.setActivePin(null);
 
     const code = nameToCode.get(country.name) ?? '';
     zoomedCountryName = country.name;
@@ -765,7 +767,7 @@
         zoomedCountryName = '';
         zoomedCountryCode = '';
         zoomedCountryFeature = null;
-      lastPinTarget = null;
+        lastPinTarget = null;
         zoomAnimating = false;
         startIdle();
         if (onComplete) onComplete();
