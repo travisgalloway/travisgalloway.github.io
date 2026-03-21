@@ -55,7 +55,7 @@
 
 {#if photo}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="lightbox-backdrop" role="dialog" aria-modal="true" bind:this={backdropEl} onclick={handleBackdropClick}>
+  <div class="lightbox-backdrop" role="dialog" aria-modal="true" aria-label="Photo lightbox" bind:this={backdropEl} onclick={handleBackdropClick}>
     <div class="lightbox-content">
       <button class="lightbox-close" bind:this={closeBtn} onclick={close} aria-label="Close lightbox">
         <svg width="20" height="20" viewBox="0 0 640 640" fill="currentColor"><path d="M509.7 141.7C512.8 138.6 512.8 133.5 509.7 130.4C506.6 127.3 501.5 127.3 498.4 130.4L320 308.7L141.7 130.3C138.6 127.2 133.5 127.2 130.4 130.3C127.3 133.4 127.3 138.5 130.4 141.6L308.7 320L130.3 498.3C127.2 501.4 127.2 506.5 130.3 509.6C133.4 512.7 138.5 512.7 141.6 509.6L320 331.3L498.3 509.7C501.4 512.8 506.5 512.8 509.6 509.7C512.7 506.6 512.7 501.5 509.6 498.4L331.3 320L509.7 141.7z"/></svg>

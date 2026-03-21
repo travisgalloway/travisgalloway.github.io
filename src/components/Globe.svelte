@@ -508,8 +508,9 @@
     if (zoomAnimating || !renderer) return;
 
     const rect = canvasEl.getBoundingClientRect();
-    const mx = sourceEvent.clientX - rect.left;
-    const my = sourceEvent.clientY - rect.top;
+    const pointer = sourceEvent.changedTouches?.[0] ?? sourceEvent;
+    const mx = pointer.clientX - rect.left;
+    const my = pointer.clientY - rect.top;
 
     if (isZoomed) {
       // Zoomed: hit-test pins in the zoomed country first (travel + photo)
