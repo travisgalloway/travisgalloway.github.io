@@ -84,13 +84,19 @@
           <a href="#contact">Connect</a>
         </div>
       </div>
-      <img
-        src="/images/profile.jpeg"
-        alt="Travis Galloway"
-        width="200"
-        height="200"
-        class="hero-avatar"
-      />
+      <button
+        class="avatar-btn"
+        onclick={() => (lightboxPhoto = { full: '/images/profile.jpeg', description: 'The day my wife discovered portrait mode on iPhone.', city: 'Havana', country: 'Cuba', countryCode: 'CU', lat: 23.1136, lng: -82.3666 })}
+        aria-label="View profile photo"
+      >
+        <img
+          src="/images/profile.jpeg"
+          alt="Travis Galloway"
+          width="200"
+          height="200"
+          class="hero-avatar"
+        />
+      </button>
     </div>
   </div>
 </section>
@@ -118,7 +124,6 @@
     flex-direction: column;
     justify-content: center;
     gap: 16px;
-    opacity: 0.6;
   }
 
   .hero-content {
@@ -190,15 +195,18 @@
     border: none;
     background: var(--c-border-light);
     cursor: pointer;
+    opacity: 0.6;
     transition:
       transform 0.2s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      opacity 0.2s ease;
   }
 
   .card:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     z-index: 2;
+    opacity: 1;
   }
 
   .card img {
@@ -242,13 +250,28 @@
     color: var(--c-text-muted);
   }
 
+  .avatar-btn {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .avatar-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
   .hero-avatar {
     width: 200px;
     height: 200px;
     border-radius: 12px;
     object-fit: cover;
     aspect-ratio: 1 / 1;
-    flex-shrink: 0;
+    display: block;
   }
 
   .name {
@@ -298,16 +321,29 @@
       height: 100px;
       border-radius: 8px;
     }
+    .avatar-btn {
+      border-radius: 8px;
+    }
   }
 
   @media (max-width: 480px) {
     .hero-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 6px;
+      width: 120px;
+      height: 120px;
+      border-radius: 10px;
+    }
+    .avatar-btn {
+      border-radius: 10px;
     }
     .hero-content {
       padding: 1.25rem;
+    }
+    .blurb,
+    .links {
+      display: none;
+    }
+    .name {
+      margin-bottom: 0;
     }
   }
 </style>

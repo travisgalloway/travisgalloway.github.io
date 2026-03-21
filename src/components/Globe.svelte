@@ -9,11 +9,16 @@
   import { getAllPins, getPhotoPins, sectionRotations, stateHighlights, visitedCountryNames, nameToCode } from '../lib/globe-locations';
   import photoManifest from '../data/photo-manifest.json';
   import * as topojson from 'topojson-client';
+  import Lightbox from './Lightbox.svelte';
 
   let { size = 440 } = $props();
 
   const photoPins = getPhotoPins(photoManifest);
   const pins = [...getAllPins(), ...photoPins];
+
+  // Lookup map from photoId → full manifest entry (for lightbox)
+  const photoById = new Map(photoManifest.photos.map((p) => [p.id, p]));
+  let globeLightboxPhoto = $state(null);
 
   let canvasEl;
   let renderer;
@@ -295,12 +300,15 @@
           }
 
           if (isZoomed && zoomedCountryFeature) {
-            // Snap back to country centroid after 2s
+            // Snap back to pin cluster centroid after 2s
             dragResumeTimer = setTimeout(() => {
               const cf = zoomedCountryFeature;
+              const pt = lastPinTarget;
+              const centroid = pt ? pt.centroid : cf.centroid;
+              const angRadius = pt ? pt.angularRadius : cf.angularRadius;
               animateToTarget(
-                [-cf.centroid[0], -cf.centroid[1], 0],
-                renderer.computeZoomScale(cf),
+                [-centroid[0], -centroid[1], 0],
+                renderer.computeZoomScale(angRadius),
               );
             }, 2000);
           } else {
@@ -333,6 +341,7 @@
         zoomedCountryName = '';
         zoomedCountryCode = '';
         zoomedCountryFeature = null;
+      lastPinTarget = null;
         renderer.setZoomState('default', 0, '', '');
         startIdle();
       }
@@ -367,7 +376,9 @@
           if (isZoomed && newScale <= base + 0.1) {
             isZoomed = false;
             zoomedCountryName = '';
+            zoomedCountryCode = '';
             zoomedCountryFeature = null;
+            lastPinTarget = null;
             renderer.setZoomState('default', 0, '', '');
             startIdle();
           }
@@ -407,13 +418,34 @@
         stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
 
+      // Cancel any in-progress animation so the new zoom isn't blocked
+      stopAnim();
+      zoomAnimating = false;
+
+      // Find and highlight the matching photo pin
+      function activateMatchingPin() {
+        if (lat != null && lng != null) {
+          const match = pins.find(
+            (p) => p.category === 'photo' && p.lat === lat && p.lng === lng,
+          );
+          if (match) {
+            renderer.setActivePin(match);
+            renderer.render();
+          }
+        }
+      }
+
       if (cf) {
-        // Existing path — zoom to country boundary
         setTimeout(() => {
-          if (isZoomed) {
-            zoomOut(() => zoomToCountry(cf));
+          if (isZoomed && zoomedCountryCode === code) {
+            // Already on this country — just highlight the pin, don't re-zoom
+            activateMatchingPin();
+          } else if (isZoomed) {
+            zoomOut(() => {
+              zoomToCountry(cf, activateMatchingPin);
+            });
           } else {
-            zoomToCountry(cf);
+            zoomToCountry(cf, activateMatchingPin);
           }
         }, 400);
       } else if (lat != null && lng != null) {
@@ -439,7 +471,9 @@
       const zoomRatio = renderer.getScale() / oldBase;
       renderer.resize(newSize);
       if (isZoomed && zoomedCountryFeature) {
-        const zoomScale = renderer.computeZoomScale(zoomedCountryFeature);
+        const pt = lastPinTarget;
+        const angRadius = pt ? pt.angularRadius : zoomedCountryFeature.angularRadius;
+        const zoomScale = renderer.computeZoomScale(angRadius);
         renderer.setScale(zoomScale);
       } else if (zoomRatio > 1.01) {
         // Preserve free zoom ratio
@@ -507,14 +541,29 @@
             return;
           }
         }
-        // Same country — show expanded card
+        // Same country — open lightbox for photo pins, card for travel pins
+        if (pp.pin.category === 'photo') {
+          const photoEntry = photoById.get(pp.pin.photoId);
+          if (photoEntry) {
+            renderer.setActivePin(pp.pin);
+            renderer.render();
+            globeLightboxPhoto = photoEntry;
+            return;
+          }
+        }
         expandedPinIndex = closestIdx;
         positionCard(pp.x, pp.y);
         return;
       }
 
-      // Click anywhere else while zoomed → zoom out
-      zoomOut();
+      // Click anywhere else while zoomed
+      if (expandedPinIndex >= 0) {
+        // First click: dismiss card, stay zoomed
+        dismissCard();
+      } else {
+        // Second click: zoom out
+        zoomOut();
+      }
     } else {
       // Default view: hit-test pins first, then countries
       const projected = renderer.getProjectedPins();
@@ -535,7 +584,7 @@
 
       if (closestPinIdx >= 0) {
         const pin = projected[closestPinIdx].pin;
-        if (pin.category === 'travel') {
+        if (pin.category === 'travel' || pin.category === 'photo') {
           const code = pin.countryCode;
           const country = code ? countryFeaturesMap.get(code) : null;
           if (country) {
@@ -543,6 +592,8 @@
             return;
           }
         }
+        // home/studyAbroad pins consume the click without falling through
+        return;
       }
 
       // Fall through: hit-test visited country polygons
@@ -565,7 +616,28 @@
     expandedPinIndex = -1;
   }
 
-  function zoomToCountry(country) {
+  // Compute zoom target based on pin cluster centroid instead of country centroid
+  let lastPinTarget = null;
+  function computePinZoomTarget(code) {
+    const countryPins = pins.filter(
+      (p) => (p.category === 'travel' || p.category === 'photo') && p.countryCode === code,
+    );
+    if (countryPins.length === 0) return null;
+
+    const avgLng = countryPins.reduce((s, p) => s + p.lng, 0) / countryPins.length;
+    const avgLat = countryPins.reduce((s, p) => s + p.lat, 0) / countryPins.length;
+
+    let maxDist = 0;
+    for (const p of countryPins) {
+      const d = geoDistance([avgLng, avgLat], [p.lng, p.lat]) * (180 / Math.PI);
+      if (d > maxDist) maxDist = d;
+    }
+    const angularRadius = Math.max(maxDist + 2, 5);
+
+    return { centroid: [avgLng, avgLat], angularRadius };
+  }
+
+  function zoomToCountry(country, onComplete) {
     if (zoomAnimating || !renderer) return;
 
     zoomAnimating = true;
@@ -575,13 +647,20 @@
     clearHover();
     dismissCard();
 
+    const code = nameToCode.get(country.name) ?? '';
     zoomedCountryName = country.name;
-    zoomedCountryCode = nameToCode.get(country.name) ?? '';
+    zoomedCountryCode = code;
     zoomedCountryFeature = country;
     isZoomed = true;
 
-    const targetRotation = [-country.centroid[0], -country.centroid[1], 0];
-    const targetScale = renderer.computeZoomScale(country);
+    // Zoom to pin cluster centroid if pins exist, otherwise country centroid
+    const pinTarget = computePinZoomTarget(code);
+    lastPinTarget = pinTarget;
+    const centroid = pinTarget ? pinTarget.centroid : country.centroid;
+    const angRadius = pinTarget ? pinTarget.angularRadius : country.angularRadius;
+
+    const targetRotation = [-centroid[0], -centroid[1], 0];
+    const targetScale = renderer.computeZoomScale(angRadius);
 
     if (prefersReducedMotion) {
       renderer.setRotation(targetRotation);
@@ -589,6 +668,7 @@
       renderer.setZoomState('zoomed', 1, country.name, zoomedCountryCode);
       renderer.render();
       zoomAnimating = false;
+      if (onComplete) onComplete();
       return;
     }
 
@@ -617,19 +697,26 @@
         animTimer = null;
         renderer.setZoomState('zoomed', 1, zoomedCountryName, zoomedCountryCode);
         zoomAnimating = false;
+        if (onComplete) onComplete();
       }
     });
   }
 
   function zoomOut(onComplete) {
-    if (zoomAnimating || !renderer) {
+    if (!renderer) {
       if (onComplete) onComplete();
       return;
+    }
+    if (zoomAnimating) {
+      // Force-reset stale animation state so we don't stay stuck
+      stopAnim();
+      zoomAnimating = false;
     }
 
     zoomAnimating = true;
     dismissCard();
     clearDragResume();
+    renderer.setActivePin(null);
 
     const targetRotation = sectionRotations[activeSection] || sectionRotations.about;
     const targetScale = renderer.getBaseScale();
@@ -643,6 +730,7 @@
       zoomedCountryName = '';
       zoomedCountryCode = '';
       zoomedCountryFeature = null;
+      lastPinTarget = null;
       zoomAnimating = false;
       startIdle();
       if (onComplete) onComplete();
@@ -676,6 +764,7 @@
         zoomedCountryName = '';
         zoomedCountryCode = '';
         zoomedCountryFeature = null;
+      lastPinTarget = null;
         zoomAnimating = false;
         startIdle();
         if (onComplete) onComplete();
@@ -1006,9 +1095,7 @@
   <!-- Back button (zoomed view) -->
   {#if isZoomed}
     <button class="globe-back-btn" onclick={() => zoomOut()}>
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg width="14" height="14" viewBox="0 0 640 640" fill="currentColor"><path d="M162.3 314.3C159.2 317.4 159.2 322.5 162.3 325.6L378.3 541.6C381.4 544.7 386.5 544.7 389.6 541.6C392.7 538.5 392.7 533.4 389.6 530.3L179.3 320L389.7 109.7C392.8 106.6 392.8 101.5 389.7 98.4C386.6 95.3 381.5 95.3 378.4 98.4L162.4 314.4z"/></svg>
       Back
     </button>
   {/if}
@@ -1023,9 +1110,7 @@
     {@const pin = pins[expandedPinIndex]}
     <div class="globe-card" style="left:{cardX}px;top:{cardY}px">
       <button class="globe-card-close" onclick={() => dismissCard()}>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+        <svg width="12" height="12" viewBox="0 0 640 640" fill="currentColor"><path d="M509.7 141.7C512.8 138.6 512.8 133.5 509.7 130.4C506.6 127.3 501.5 127.3 498.4 130.4L320 308.7L141.7 130.3C138.6 127.2 133.5 127.2 130.4 130.3C127.3 133.4 127.3 138.5 130.4 141.6L308.7 320L130.3 498.3C127.2 501.4 127.2 506.5 130.3 509.6C133.4 512.7 138.5 512.7 141.6 509.6L320 331.3L498.3 509.7C501.4 512.8 506.5 512.8 509.6 509.7C512.7 506.6 512.7 501.5 509.6 498.4L331.3 320L509.7 141.7z"/></svg>
       </button>
       {#if pin.category === 'photo'}
         <img src={pin.thumbUrl} alt={[pin.city, pin.state, pin.country].filter(Boolean).join(', ')} class="globe-card-thumb" />
@@ -1072,6 +1157,8 @@
     </div>
   {/if}
 </div>
+
+<Lightbox bind:photo={globeLightboxPhoto} showGlobeButton={false} />
 
 <style>
   .globe-wrapper {
