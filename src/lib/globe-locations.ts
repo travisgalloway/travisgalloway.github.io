@@ -104,6 +104,7 @@ export const visitedCountries = new Map<string, Map<string, { lat: number; lng: 
   ['Puerto Rico', new Map([['San Juan', { lat: 18.4655, lng: -66.1057 }]])],
   ['Cuba', new Map([['Havana', { lat: 23.1136, lng: -82.3666 }]])],
   ['Costa Rica', new Map([['Fortuna', { lat: 10.4678, lng: -84.6427 }]])],
+  ['El Salvador', new Map([['San Salvador', { lat: 13.6929, lng: -89.2182 }]])],
 ]);
 
 export const visitedCountryNames = new Set<string>(visitedCountries.keys());
@@ -130,6 +131,7 @@ export const countryCodeToName = new Map<string, string>([
   ['PR', 'Puerto Rico'],
   ['CU', 'Cuba'],
   ['CR', 'Costa Rica'],
+  ['SV', 'El Salvador'],
 ]);
 
 export const nameToCode = new Map([...countryCodeToName].map(([c, n]) => [n, c]));

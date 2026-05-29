@@ -8,7 +8,27 @@ const THUMBS_DIR = path.join(PHOTOS_DIR, 'thumbs');
 const MANIFEST_PATH = 'src/data/photo-manifest.json';
 const MAX_MATCH_KM = 500;
 
-// Known locations from globe-locations.ts
+// Canonical key order for manifest entries (normalizes any drift).
+const KEY_ORDER = [
+  'id', 'thumb', 'full', 'orientation', 'description',
+  'city', 'state', 'country', 'countryCode', 'lat', 'lng',
+];
+
+// Maps country name -> ISO code, mirroring countryCodeToName in
+// src/lib/globe-locations.ts. Used to write/backfill `countryCode`.
+const countryNameToCode = {
+  Australia: 'AU', Chile: 'CL', Antarctica: 'AQ', 'United Kingdom': 'GB',
+  Netherlands: 'NL', Germany: 'DE', Austria: 'AT', Spain: 'ES', Turkey: 'TR',
+  Kenya: 'KE', Uganda: 'UG', Rwanda: 'RW', Tanzania: 'TZ', Qatar: 'QA',
+  Singapore: 'SG', Vietnam: 'VN', Japan: 'JP', 'South Korea': 'KR',
+  'Puerto Rico': 'PR', Cuba: 'CU', 'Costa Rica': 'CR', 'El Salvador': 'SV',
+};
+
+// NON-AUTHORITATIVE convenience copy of `visitedCountries` in
+// src/lib/globe-locations.ts, used ONLY to autofill brand-new photo stubs from
+// GPS. The committed src/data/photo-manifest.json is the source of truth — this
+// script preserves existing curated entries and never renames or deletes files.
+// If you add a country here, add it to globe-locations.ts (and vice versa).
 const knownLocations = [
   { city: 'Sydney', country: 'Australia', state: 'New South Wales', lat: -33.8688, lng: 151.2093 },
   { city: 'Santiago', country: 'Chile', state: null, lat: -33.4489, lng: -70.6693 },
@@ -33,6 +53,7 @@ const knownLocations = [
   { city: 'Fortuna', country: 'Costa Rica', state: 'Alajuela', lat: 10.4678, lng: -84.6427 },
   { city: 'Guadalajara', country: 'Mexico', state: 'Jalisco', lat: 20.6597, lng: -103.3496 },
   { city: 'Minneapolis', country: 'United States', state: 'Minnesota', lat: 44.98, lng: -93.27 },
+  { city: 'San Salvador', country: 'El Salvador', state: null, lat: 13.6929, lng: -89.2182 },
 ];
 
 function haversineKm(lat1, lng1, lat2, lng2) {
@@ -45,13 +66,6 @@ function haversineKm(lat1, lng1, lat2, lng2) {
       Math.cos((lat2 * Math.PI) / 180) *
       Math.sin(dLng / 2) ** 2;
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-function slugify(str) {
-  return str
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
 }
 
 function findClosestLocation(lat, lng) {
@@ -67,133 +81,131 @@ function findClosestLocation(lat, lng) {
   return bestDist <= MAX_MATCH_KM ? best : null;
 }
 
+function orderKeys(entry) {
+  const ordered = {};
+  for (const key of KEY_ORDER) ordered[key] = entry[key] ?? null;
+  return ordered;
+}
+
 async function main() {
   // Ensure thumbs directory exists
   fs.mkdirSync(THUMBS_DIR, { recursive: true });
 
-  const files = fs.readdirSync(PHOTOS_DIR).filter((f) => {
-    const ext = path.extname(f).toLowerCase();
-    return ['.jpeg', '.jpg', '.png'].includes(ext) && !f.startsWith('.');
-  }).sort();
+  // Index image files by their canonical id (filename without extension).
+  // The filename IS the id — it is never derived from GPS or renamed.
+  const fileById = new Map();
+  for (const file of fs.readdirSync(PHOTOS_DIR)) {
+    const ext = path.extname(file).toLowerCase();
+    if (!['.jpeg', '.jpg', '.png'].includes(ext) || file.startsWith('.')) continue;
+    if (fs.statSync(path.join(PHOTOS_DIR, file)).isDirectory()) continue;
+    const id = path.basename(file, path.extname(file));
+    if (fileById.has(id)) {
+      console.warn(`  WARNING: id collision "${id}" (${fileById.get(id)} vs ${file}); keeping ${fileById.get(id)}`);
+      continue;
+    }
+    fileById.set(id, file);
+  }
 
-  console.log(`Found ${files.length} photos to process`);
-
-  // Load existing manifest to preserve description and state values
-  const existingDescriptions = {};
-  const existingStates = {};
+  // Load existing manifest — the source of truth for curated fields.
+  const existing = new Map();
+  const manifestOrder = [];
   if (fs.existsSync(MANIFEST_PATH)) {
     try {
       const oldManifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf-8'));
       for (const p of oldManifest.photos) {
-        if (p.description) existingDescriptions[p.id] = p.description;
-        if (p.state) existingStates[p.id] = p.state;
+        existing.set(p.id, p);
+        manifestOrder.push(p.id);
       }
     } catch {
-      // ignore parse errors
+      // ignore parse errors — treat as empty (every file becomes a stub)
     }
   }
+
+  // Preserve existing manifest order (keeping only ids that still have a file),
+  // then append new files (sorted) — minimizes the manifest diff. One entry per
+  // file id: dedupe in case the manifest carried duplicate ids.
+  const newIds = [...fileById.keys()].filter((id) => !existing.has(id)).sort();
+  const seen = new Set();
+  const orderedIds = [...manifestOrder.filter((id) => fileById.has(id)), ...newIds]
+    .filter((id) => (seen.has(id) ? false : seen.add(id)));
 
   const photos = [];
-  const nameCounters = {};
-  let unknownCounter = 0;
+  let newStubs = 0;
 
-  for (const file of files) {
-    const filepath = path.join(PHOTOS_DIR, file);
-    const stat = fs.statSync(filepath);
-    if (stat.isDirectory()) continue;
+  for (const id of orderedIds) {
+    const filename = fileById.get(id);
+    const filepath = path.join(PHOTOS_DIR, filename);
 
-    // Extract GPS
-    let gps = null;
-    try {
-      gps = await exifr.gps(filepath);
-    } catch {
-      // no EXIF data
+    // Generate the thumbnail only if it's missing (idempotent, no binary churn).
+    const thumbPath = path.join(THUMBS_DIR, `${id}.jpeg`);
+    if (!fs.existsSync(thumbPath)) {
+      await sharp(filepath)
+        .resize(400, 400, { fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 75 })
+        .toFile(thumbPath);
     }
 
-    let city = null;
-    let country = null;
-    let state = null;
-    let lat = null;
-    let lng = null;
-    let id;
-
-    if (gps && gps.latitude != null && gps.longitude != null) {
-      lat = gps.latitude;
-      lng = gps.longitude;
-      const match = findClosestLocation(lat, lng);
-      if (match) {
-        city = match.city;
-        country = match.country;
-        state = match.state || null;
+    let entry;
+    if (existing.has(id)) {
+      // Preserve all curated fields; only refresh the derived paths.
+      entry = { ...existing.get(id) };
+      entry.thumb = `/images/travels/thumbs/${id}.jpeg`;
+      entry.full = `/images/travels/${filename}`;
+      if (entry.countryCode == null && entry.country) {
+        entry.countryCode = countryNameToCode[entry.country] ?? null;
       }
-    }
-
-    // Determine slug/ID
-    if (city && country) {
-      const base = `${slugify(city)}-${slugify(country)}`;
-      nameCounters[base] = (nameCounters[base] || 0) + 1;
-      id = `${base}-${nameCounters[base]}`;
     } else {
-      unknownCounter++;
-      id = `unknown-${unknownCounter}`;
-    }
+      // New file → build a stub. GPS autofill is best-effort.
+      const metadata = await sharp(filepath).metadata();
+      const orientation = metadata.width > metadata.height ? 'h' : 'v';
 
-    const outFilename = `${id}.jpeg`;
-
-    // Get image dimensions for orientation
-    const metadata = await sharp(filepath).metadata();
-    const orientation = metadata.width > metadata.height ? 'h' : 'v';
-
-    // Generate thumbnail
-    await sharp(filepath)
-      .resize(400, 400, { fit: 'inside', withoutEnlargement: true })
-      .jpeg({ quality: 75 })
-      .toFile(path.join(THUMBS_DIR, outFilename));
-
-    // Copy/rename full-size image
-    const fullDest = path.join(PHOTOS_DIR, outFilename);
-    if (filepath !== fullDest) {
-      fs.copyFileSync(filepath, fullDest);
-    }
-
-    photos.push({
-      id,
-      thumb: `/images/travels/thumbs/${outFilename}`,
-      full: `/images/travels/${outFilename}`,
-      orientation,
-      description: existingDescriptions[id] || null,
-      state: existingStates[id] || state,
-      city,
-      country,
-      lat,
-      lng,
-    });
-
-    console.log(`  ${file} → ${outFilename} (${city || 'unknown'}, ${orientation})`);
-  }
-
-  // Remove original files that were renamed
-  const newNames = new Set(photos.map((p) => `${p.id}.jpeg`));
-  for (const file of files) {
-    if (!newNames.has(file)) {
-      const filepath = path.join(PHOTOS_DIR, file);
-      if (fs.existsSync(filepath)) {
-        fs.unlinkSync(filepath);
-        console.log(`  Removed original: ${file}`);
+      let gps = null;
+      try {
+        gps = await exifr.gps(filepath);
+      } catch {
+        // no EXIF data
       }
+      const hasGps = gps && gps.latitude != null && gps.longitude != null;
+      const loc = hasGps ? findClosestLocation(gps.latitude, gps.longitude) : null;
+
+      entry = {
+        id,
+        thumb: `/images/travels/thumbs/${id}.jpeg`,
+        full: `/images/travels/${filename}`,
+        orientation,
+        description: null,
+        city: loc?.city ?? null,
+        state: loc?.state ?? null,
+        country: loc?.country ?? null,
+        countryCode: loc ? countryNameToCode[loc.country] ?? null : null,
+        lat: hasGps ? gps.latitude : null,
+        lng: hasGps ? gps.longitude : null,
+      };
+      newStubs++;
+      console.log(
+        `  NEW STUB: ${id}` +
+          (loc ? ` (autofilled ${loc.city})` : ' (no GPS match — fill in by hand)'),
+      );
+    }
+
+    photos.push(orderKeys(entry));
+  }
+
+  // Report manifest entries whose image file no longer exists (pruned).
+  let pruned = 0;
+  for (const id of manifestOrder) {
+    if (!fileById.has(id)) {
+      console.log(`  PRUNED (no image file): ${id}`);
+      pruned++;
     }
   }
 
-  // Write manifest
-  const manifest = { photos };
-  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n');
+  fs.writeFileSync(MANIFEST_PATH, JSON.stringify({ photos }, null, 2) + '\n');
   console.log(`\nManifest written: ${MANIFEST_PATH} (${photos.length} photos)`);
-  console.log(
-    `  With GPS: ${photos.filter((p) => p.lat !== null).length}`,
-  );
-  console.log(
-    `  Without GPS: ${photos.filter((p) => p.lat === null).length}`,
-  );
+  console.log(`  New stubs: ${newStubs}`);
+  console.log(`  Pruned: ${pruned}`);
+  console.log(`  With GPS: ${photos.filter((p) => p.lat !== null).length}`);
+  console.log(`  Without GPS: ${photos.filter((p) => p.lat === null).length}`);
 }
 
 main().catch(console.error);

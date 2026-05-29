@@ -22,9 +22,9 @@
       "city": "Doha",
       "state": null,
       "country": "Qatar",
+      "countryCode": "QA",
       "lat": 25.285447,
-      "lng": 51.53104,
-      "countryCode": "QA"
+      "lng": 51.53104
     },
     {
       "id": "mgahinga-uganda-1",
@@ -35,9 +35,9 @@
       "city": null,
       "state": null,
       "country": "Uganda",
+      "countryCode": "UG",
       "lat": -1.3669722222222223,
-      "lng": 29.645294444444446,
-      "countryCode": "UG"
+      "lng": 29.645294444444446
     },
     {
       "id": "sydney-australia-1",
@@ -48,22 +48,22 @@
       "city": "Sydney",
       "state": "New South Wales",
       "country": "Australia",
+      "countryCode": "AU",
       "lat": -33.85691388888889,
-      "lng": 151.21054166666664,
-      "countryCode": "AU"
+      "lng": 151.21054166666664
     },
     {
       "id": "antarctic-peninsula-antarctica-1",
       "thumb": "/images/travels/thumbs/antarctic-peninsula-antarctica-1.jpeg",
       "full": "/images/travels/antarctic-peninsula-antarctica-1.jpeg",
       "orientation": "h",
-      "description": "Antarctic Peninsula",
-      "city": null,
+      "description": null,
+      "city": "Antarctic Peninsula",
       "state": null,
       "country": "Antarctica",
-      "lat": -64.50181666666667,
-      "lng": -61.76530833333333,
-      "countryCode": "AQ"
+      "countryCode": "AQ",
+      "lat": -64.14508055555557,
+      "lng": -60.988372222222225
     },
     {
       "id": "boquer-n-puerto-rico-1",
@@ -74,9 +74,9 @@
       "city": "Boquerón",
       "state": null,
       "country": "Puerto Rico",
+      "countryCode": "PR",
       "lat": 18.025008333333332,
-      "lng": -67.17408888888889,
-      "countryCode": "PR"
+      "lng": -67.17408888888889
     },
     {
       "id": "tonto-united-states-1",
@@ -87,9 +87,9 @@
       "city": null,
       "state": "Arizona",
       "country": "United States",
+      "countryCode": "US",
       "lat": 33.494175,
-      "lng": -111.44256666666666,
-      "countryCode": "US"
+      "lng": -111.44256666666666
     },
     {
       "id": "istanbul-turkey-1",
@@ -100,9 +100,9 @@
       "city": "Istanbul",
       "state": null,
       "country": "Turkey",
+      "countryCode": "TR",
       "lat": 41.00841111111111,
-      "lng": 28.980080555555553,
-      "countryCode": "TR"
+      "lng": 28.980080555555553
     },
     {
       "id": "goreme-turkey-1",
@@ -113,9 +113,9 @@
       "city": "Goreme",
       "state": null,
       "country": "Turkey",
+      "countryCode": "TR",
       "lat": 38.63782222222222,
-      "lng": 34.85783333333333,
-      "countryCode": "TR"
+      "lng": 34.85783333333333
     },
     {
       "id": "kings-canyon-australia-1",
@@ -126,9 +126,9 @@
       "city": null,
       "state": "Northern Territory",
       "country": "Australia",
+      "countryCode": "AU",
       "lat": -24.246825,
-      "lng": 131.57513333333333,
-      "countryCode": "AU"
+      "lng": 131.57513333333333
     },
     {
       "id": "alice-springs-australia-1",
@@ -139,9 +139,9 @@
       "city": "Alice Springs",
       "state": "Northern Territory",
       "country": "Australia",
+      "countryCode": "AU",
       "lat": -23.704625,
-      "lng": 133.8848722222222,
-      "countryCode": "AU"
+      "lng": 133.8848722222222
     },
     {
       "id": "cassowary-coast-australia-1",
@@ -152,9 +152,9 @@
       "city": "Cassowary Coast",
       "state": "Queensland",
       "country": "Australia",
+      "countryCode": "AU",
       "lat": -17.74994166666667,
-      "lng": 145.6164861111111,
-      "countryCode": "AU"
+      "lng": 145.6164861111111
     },
     {
       "id": "magnetic-island-australia-1",
@@ -165,9 +165,9 @@
       "city": null,
       "state": "Queensland",
       "country": "Australia",
+      "countryCode": "AU",
       "lat": -19.127669444444447,
-      "lng": 146.8687277777778,
-      "countryCode": "AU"
+      "lng": 146.8687277777778
     },
     {
       "id": "kas-turkey-1",
@@ -178,9 +178,9 @@
       "city": "Kas",
       "state": null,
       "country": "Turkey",
+      "countryCode": "TR",
       "lat": 36.19171944444444,
-      "lng": 29.65151388888889,
-      "countryCode": "TR"
+      "lng": 29.65151388888889
     },
     {
       "id": "ephesus-turkey-1",
@@ -191,9 +191,9 @@
       "city": null,
       "state": null,
       "country": "Turkey",
+      "countryCode": "TR",
       "lat": 37.936816666666665,
-      "lng": 27.34513611111111,
-      "countryCode": "TR"
+      "lng": 27.34513611111111
     },
     {
       "id": "madrid-spain-1",
@@ -204,9 +204,9 @@
       "city": "Madrid",
       "state": null,
       "country": "Spain",
+      "countryCode": "ES",
       "lat": 40.43669444444444,
-      "lng": -3.6003583333333333,
-      "countryCode": "ES"
+      "lng": -3.6003583333333333
     },
     {
       "id": "barcelona-spain-1",
@@ -217,9 +217,9 @@
       "city": "Barcelona",
       "state": null,
       "country": "Spain",
+      "countryCode": "ES",
       "lat": 41.37735,
-      "lng": 2.189761111111111,
-      "countryCode": "ES"
+      "lng": 2.189761111111111
     },
     {
       "id": "bermeo-spain-1",
@@ -230,9 +230,9 @@
       "city": "Bermeo",
       "state": "Basque Country",
       "country": "Spain",
+      "countryCode": "ES",
       "lat": 43.44737222222222,
-      "lng": -2.7848555555555556,
-      "countryCode": "ES"
+      "lng": -2.7848555555555556
     },
     {
       "id": "elciego-spain-1",
@@ -243,9 +243,9 @@
       "city": "Elciego",
       "state": null,
       "country": "Spain",
+      "countryCode": "ES",
       "lat": 42.510352777777776,
-      "lng": -2.618161111111111,
-      "countryCode": "ES"
+      "lng": -2.618161111111111
     },
     {
       "id": "fort-collins-united-states-1",
@@ -256,9 +256,9 @@
       "city": "Fort Collins",
       "state": "Colorado",
       "country": "United States",
+      "countryCode": "US",
       "lat": 40.5284,
-      "lng": -105.1802138888889,
-      "countryCode": "US"
+      "lng": -105.1802138888889
     },
     {
       "id": "havana-cuba-1",
@@ -269,9 +269,9 @@
       "city": "Havana",
       "state": null,
       "country": "Cuba",
+      "countryCode": "CU",
       "lat": 23.136388888888888,
-      "lng": -82.35046388888888,
-      "countryCode": "CU"
+      "lng": -82.35046388888888
     },
     {
       "id": "chinatown-singapore-1",
@@ -282,9 +282,9 @@
       "city": null,
       "state": null,
       "country": "Singapore",
+      "countryCode": "SG",
       "lat": 1.2834083333333333,
-      "lng": 103.84496388888888,
-      "countryCode": "SG"
+      "lng": 103.84496388888888
     },
     {
       "id": "vinales-cuba-1",
@@ -295,9 +295,9 @@
       "city": "",
       "state": "Pinar del Río",
       "country": "Cuba",
+      "countryCode": "CU",
       "lat": 22.625241666666668,
-      "lng": -83.69187222222223,
-      "countryCode": "CU"
+      "lng": -83.69187222222223
     },
     {
       "id": "cayo-jutias-cuba-1",
@@ -308,9 +308,9 @@
       "city": null,
       "state": "Pinar del Río",
       "country": "Cuba",
+      "countryCode": "CU",
       "lat": 22.705005555555555,
-      "lng": -84.04737777777778,
-      "countryCode": "CU"
+      "lng": -84.04737777777778
     },
     {
       "id": "apache-sitgreaves-united-states-1",
@@ -321,9 +321,9 @@
       "city": null,
       "state": "Arizona",
       "country": "United States",
+      "countryCode": "US",
       "lat": 34.04265,
-      "lng": -109.51271,
-      "countryCode": "US"
+      "lng": -109.51271
     },
     {
       "id": "masai-mara-kenya-1",
@@ -334,9 +334,9 @@
       "city": "Masai Mara",
       "state": null,
       "country": "Kenya",
+      "countryCode": "KE",
       "lat": -1.4601833333333334,
-      "lng": 35.13162222222222,
-      "countryCode": "KE"
+      "lng": 35.13162222222222
     },
     {
       "id": "lake-nakuru-kenya-1",
@@ -347,9 +347,9 @@
       "city": "Lake Nakuru",
       "state": null,
       "country": "Kenya",
+      "countryCode": "KE",
       "lat": -0.42390833333333333,
-      "lng": 36.11423055555556,
-      "countryCode": "KE"
+      "lng": 36.11423055555556
     },
     {
       "id": "kibale-uganda-1",
@@ -360,9 +360,9 @@
       "city": null,
       "state": null,
       "country": "Uganda",
+      "countryCode": "UG",
       "lat": -0.5708333333333334,
-      "lng": 30.34361111111111,
-      "countryCode": "UG"
+      "lng": 30.34361111111111
     },
     {
       "id": "queen-elizabeth-uganda-1",
@@ -373,9 +373,9 @@
       "city": null,
       "state": null,
       "country": "Uganda",
+      "countryCode": "UG",
       "lat": -0.1298638888888889,
-      "lng": 30.053186111111113,
-      "countryCode": "UG"
+      "lng": 30.053186111111113
     },
     {
       "id": "roadblock-uganda-1",
@@ -386,9 +386,9 @@
       "city": null,
       "state": null,
       "country": "Uganda",
+      "countryCode": "UG",
       "lat": -0.42840833333333334,
-      "lng": 29.863719444444445,
-      "countryCode": "UG"
+      "lng": 29.863719444444445
     },
     {
       "id": "kanungu-uganda-1",
@@ -399,9 +399,9 @@
       "city": "Kanungu",
       "state": null,
       "country": "Uganda",
+      "countryCode": "UG",
       "lat": -1.1080805555555557,
-      "lng": 29.806966666666668,
-      "countryCode": "UG"
+      "lng": 29.806966666666668
     },
     {
       "id": "kigali-rwanda-1",
@@ -412,9 +412,9 @@
       "city": "Kigali",
       "state": null,
       "country": "Rwanda",
+      "countryCode": "RW",
       "lat": -1.9924722222222222,
-      "lng": 30.074333333333332,
-      "countryCode": "RW"
+      "lng": 30.074333333333332
     },
     {
       "id": "jinja-uganda-1",
@@ -425,9 +425,9 @@
       "city": "Jinja",
       "state": null,
       "country": "Uganda",
+      "countryCode": "UG",
       "lat": 0.4414166666666667,
-      "lng": 33.20333333333333,
-      "countryCode": "UG"
+      "lng": 33.20333333333333
     },
     {
       "id": "jinja-uganda-2",
@@ -438,9 +438,9 @@
       "city": "Jinja",
       "state": null,
       "country": "Uganda",
+      "countryCode": "UG",
       "lat": 0.4414166666666667,
-      "lng": 33.20333333333333,
-      "countryCode": "UG"
+      "lng": 33.20333333333333
     },
     {
       "id": "zanzibar-tanzania-1",
@@ -451,9 +451,9 @@
       "city": "Zanzibar",
       "state": null,
       "country": "Tanzania",
+      "countryCode": "TZ",
       "lat": -5.7476416666666665,
-      "lng": 39.28722777777777,
-      "countryCode": "TZ"
+      "lng": 39.28722777777777
     },
     {
       "id": "kilimanjaro-tanzania-1",
@@ -464,9 +464,9 @@
       "city": null,
       "state": "Moshi",
       "country": "Tanzania",
+      "countryCode": "TZ",
       "lat": -3.3408722222222225,
-      "lng": 37.36388888888889,
-      "countryCode": "TZ"
+      "lng": 37.36388888888889
     },
     {
       "id": "kilimanjaro-tanzania-2",
@@ -477,9 +477,9 @@
       "city": null,
       "state": null,
       "country": "Tanzania",
+      "countryCode": "TZ",
       "lat": -3.2426916666666665,
-      "lng": 37.51771111111111,
-      "countryCode": "TZ"
+      "lng": 37.51771111111111
     },
     {
       "id": "singapore-singapore-1",
@@ -490,9 +490,9 @@
       "city": "Singapore",
       "state": null,
       "country": "Singapore",
+      "countryCode": "SG",
       "lat": 1.2834083333333333,
-      "lng": 103.8637,
-      "countryCode": "SG"
+      "lng": 103.8637
     },
     {
       "id": "singapore-singapore-2",
@@ -503,9 +503,9 @@
       "city": "Singapore",
       "state": null,
       "country": "Singapore",
+      "countryCode": "SG",
       "lat": 1.2843222222222221,
-      "lng": 103.86553055555555,
-      "countryCode": "SG"
+      "lng": 103.86553055555555
     },
     {
       "id": "singapore-singapore-3",
@@ -516,9 +516,9 @@
       "city": "Singapore",
       "state": null,
       "country": "Singapore",
+      "countryCode": "SG",
       "lat": 1.2817666666666665,
-      "lng": 103.86398333333332,
-      "countryCode": "SG"
+      "lng": 103.86398333333332
     },
     {
       "id": "ha-long-bay-vietnam-1",
@@ -529,9 +529,9 @@
       "city": null,
       "state": null,
       "country": "Vietnam",
+      "countryCode": "VN",
       "lat": 20.762769444444444,
-      "lng": 107.07070277777777,
-      "countryCode": "VN"
+      "lng": 107.07070277777777
     },
     {
       "id": "seoul-south-korea-1",
@@ -542,9 +542,9 @@
       "city": "Seoul",
       "state": null,
       "country": "South Korea",
+      "countryCode": "KR",
       "lat": 37.57421388888889,
-      "lng": 126.98470277777778,
-      "countryCode": "KR"
+      "lng": 126.98470277777778
     },
     {
       "id": "boston-usa-1",
@@ -555,9 +555,9 @@
       "city": "Boston",
       "state": "Massachusetts",
       "country": "United States",
+      "countryCode": "US",
       "lat": 42.34674722222223,
-      "lng": -71.09629722222222,
-      "countryCode": "US"
+      "lng": -71.09629722222222
     },
     {
       "id": "dark-hedges-northern-ireland-1",
@@ -568,9 +568,9 @@
       "city": null,
       "state": "County Antrim",
       "country": "Northern Ireland",
+      "countryCode": "GB",
       "lat": 55.13488888888889,
-      "lng": -6.381449999999999,
-      "countryCode": "GB"
+      "lng": -6.381449999999999
     },
     {
       "id": "giants-causeway-northern-ireland-1",
@@ -581,9 +581,9 @@
       "city": null,
       "state": "County Antrim",
       "country": "Northern Ireland",
+      "countryCode": "GB",
       "lat": 55.24108888888889,
-      "lng": -6.511616666666667,
-      "countryCode": "GB"
+      "lng": -6.511616666666667
     },
     {
       "id": "derry-northern-ireland-1",
@@ -594,9 +594,9 @@
       "city": "Derry",
       "state": null,
       "country": "Northern Ireland",
+      "countryCode": "GB",
       "lat": 54.99585833333333,
-      "lng": -7.326686111111111,
-      "countryCode": "GB"
+      "lng": -7.326686111111111
     },
     {
       "id": "derry-northern-ireland-2",
@@ -607,9 +607,9 @@
       "city": "Derry",
       "state": null,
       "country": "Northern Ireland",
+      "countryCode": "GB",
       "lat": 54.99791388888889,
-      "lng": -7.312641666666667,
-      "countryCode": "GB"
+      "lng": -7.312641666666667
     },
     {
       "id": "belfast-northern-ireland-1",
@@ -620,9 +620,9 @@
       "city": "Belfast",
       "state": null,
       "country": "Northern Ireland",
+      "countryCode": "GB",
       "lat": 54.60134166666667,
-      "lng": -5.944041666666667,
-      "countryCode": "GB"
+      "lng": -5.944041666666667
     },
     {
       "id": "glencoe-scotland-1",
@@ -633,9 +633,9 @@
       "city": "Glencoe",
       "state": null,
       "country": "Scotland",
+      "countryCode": "GB",
       "lat": 56.68978611111111,
-      "lng": -5.098122222222222,
-      "countryCode": "GB"
+      "lng": -5.098122222222222
     },
     {
       "id": "glenfinnan-scotland-1",
@@ -646,9 +646,9 @@
       "city": "Glenfinnan",
       "state": null,
       "country": "Scotland",
+      "countryCode": "GB",
       "lat": 56.87520555555555,
-      "lng": -5.436086111111111,
-      "countryCode": "GB"
+      "lng": -5.436086111111111
     },
     {
       "id": "cragganmore-scotland-1",
@@ -659,9 +659,9 @@
       "city": "Cragganmore",
       "state": null,
       "country": "Scotland",
+      "countryCode": "GB",
       "lat": 57.41207,
-      "lng": -3.38746,
-      "countryCode": "GB"
+      "lng": -3.38746
     },
     {
       "id": "aviemore-scotland-1",
@@ -672,9 +672,9 @@
       "city": "Aviemore",
       "state": null,
       "country": "Scotland",
+      "countryCode": "GB",
       "lat": 57.15168333333333,
-      "lng": -3.9237166666666665,
-      "countryCode": "GB"
+      "lng": -3.9237166666666665
     },
     {
       "id": "valparaiso-chile-1",
@@ -685,9 +685,9 @@
       "city": "Valparaiso",
       "state": null,
       "country": "Chile",
+      "countryCode": "CL",
       "lat": -33.04135,
-      "lng": -71.62800555555555,
-      "countryCode": "CL"
+      "lng": -71.62800555555555
     },
     {
       "id": "lake-country-chile-1",
@@ -698,9 +698,9 @@
       "city": null,
       "state": "Los Lagos",
       "country": "Chile",
+      "countryCode": "CL",
       "lat": -41.71013333333334,
-      "lng": -72.432625,
-      "countryCode": "CL"
+      "lng": -72.432625
     },
     {
       "id": "conc-n-chile-1",
@@ -711,9 +711,9 @@
       "city": "Concón",
       "state": null,
       "country": "Chile",
+      "countryCode": "CL",
       "lat": -32.944561111111106,
-      "lng": -71.54736388888888,
-      "countryCode": "CL"
+      "lng": -71.54736388888888
     },
     {
       "id": "winston-uma-1",
@@ -724,9 +724,9 @@
       "city": null,
       "state": null,
       "country": null,
+      "countryCode": null,
       "lat": 34.764155555555554,
-      "lng": -107.95366666666666,
-      "countryCode": null
+      "lng": -107.95366666666666
     },
     {
       "id": "torres-del-paine-chile-1",
@@ -737,22 +737,9 @@
       "city": null,
       "state": null,
       "country": "Chile",
+      "countryCode": "CL",
       "lat": -50.943266666666666,
-      "lng": -72.95031111111112,
-      "countryCode": "CL"
-    },
-    {
-      "id": "antarctic-peninsula-antarctica-1",
-      "thumb": "/images/travels/thumbs/antarctic-peninsula-antarctica-1.jpeg",
-      "full": "/images/travels/antarctic-peninsula-antarctica-1.jpeg",
-      "orientation": "h",
-      "description": null,
-      "city": "Antarctic Peninsula",
-      "state": null,
-      "country": "Antarctica",
-      "lat": -64.14508055555557,
-      "lng": -60.988372222222225,
-      "countryCode": "AQ"
+      "lng": -72.95031111111112
     },
     {
       "id": "antarctic-peninsula-antarctica-2",
@@ -763,9 +750,9 @@
       "city": "Antarctic Peninsula",
       "state": null,
       "country": "Antarctica",
+      "countryCode": "AQ",
       "lat": -64.52703055555556,
-      "lng": -61.65011944444444,
-      "countryCode": "AQ"
+      "lng": -61.65011944444444
     },
     {
       "id": "mgahinga-uganda-2",
@@ -776,9 +763,22 @@
       "city": null,
       "state": null,
       "country": "Uganda",
+      "countryCode": "UG",
       "lat": -1.473611111111111,
-      "lng": 29.646944444444447,
-      "countryCode": "UG"
+      "lng": 29.646944444444447
+    },
+    {
+      "id": "san-salvador-1",
+      "thumb": "/images/travels/thumbs/san-salvador-1.jpeg",
+      "full": "/images/travels/san-salvador-1.jpeg",
+      "orientation": "h",
+      "description": "San Salvador, El Salvador",
+      "city": "San Salvador",
+      "state": null,
+      "country": "El Salvador",
+      "countryCode": "SV",
+      "lat": 13.717219444444444,
+      "lng": -89.27465
     }
   ]
 }
