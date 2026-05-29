@@ -75,10 +75,11 @@
   <div class="hero-content">
     <div class="inner">
       <div class="hero-text">
+        <span class="kicker">Software Engineer · Minneapolis</span>
         <h1 class="name">Travis Galloway</h1>
         <p class="blurb">
-          I'm a software engineer living in Northeast Minneapolis.<br />
-          I spend my time tinkering, traveling, and biking between breweries.
+          I'm a software engineer living in Northeast Minneapolis. I spend my
+          time tinkering, traveling, and biking between breweries.
         </p>
         <div class="links">
           <a href="#contact">Connect</a>
@@ -243,11 +244,65 @@
     min-width: 0;
   }
 
+  /* Staggered reveal of the lockup on load */
+  .hero-text > * {
+    animation: heroReveal 0.7s ease-out both;
+  }
+  .kicker {
+    animation-delay: 0.05s;
+  }
+  .name {
+    animation-delay: 0.15s;
+  }
   .blurb {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+    animation-delay: 0.25s;
+  }
+  .links {
+    animation-delay: 0.35s;
+  }
+
+  @keyframes heroReveal {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55ch;
+    font-family: ui-monospace, SFMono-Regular, Menlo, "Cascadia Mono", monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--c-accent);
+    padding: 0.3rem 0.7rem 0.3rem 0.6rem;
+    border: 1px solid var(--c-border);
+    border-radius: 999px;
+    margin-bottom: 1.1rem;
+  }
+
+  .kicker::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-accent);
+  }
+
+  .blurb {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    max-width: 46ch;
+    margin-bottom: 1.75rem;
     color: var(--c-text-muted);
+    text-wrap: pretty;
   }
 
   .avatar-btn {
@@ -276,11 +331,11 @@
 
   .name {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(2.25rem, 5.5vw, 3.25rem);
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.75rem;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin-bottom: 1rem;
     color: var(--c-text);
   }
 
@@ -307,9 +362,10 @@
     background: color-mix(in srgb, var(--c-accent) 22%, transparent);
   }
 
-  .sep {
-    color: var(--c-border);
-    font-size: 0.8rem;
+  @media (prefers-reduced-motion: reduce) {
+    .hero-text > * {
+      animation: none;
+    }
   }
 
   @media (max-width: 899px) {
@@ -341,6 +397,9 @@
     .blurb,
     .links {
       display: none;
+    }
+    .kicker {
+      margin-bottom: 0.85rem;
     }
     .name {
       margin-bottom: 0;
