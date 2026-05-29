@@ -1,16 +1,30 @@
 <script>
   const companies = [
     {
+      name: "CVS Health",
+      logo: "/images/cvs.png",
+      period: "Apr 2026 – Present",
+      roles: [
+        {
+          title: "Lead Director - Developer Tooling",
+          period: "Apr 2026 – Present",
+          points: [
+            "Lead CI/CD teams.",
+          ],
+        },
+      ],
+    },
+    {
       name: "Target",
       logo: "/images/target.png",
-      period: "Nov 2019 – Present",
+      period: "Nov 2019 – Apr 2026",
       roles: [
         {
           title: "Senior Engineering Manager, Platform AI & Compute Platform",
-          period: "Aug 2022 – Present",
+          period: "Aug 2022 – Apr 2026",
           points: [
-            "Lead engineering teams across platform infrastructure and AI initiatives.",
-            "Driving enterprise adoption of AI-assisted developer tools and platform strategy.",
+            "Led engineering teams across platform infrastructure and AI initiatives.",
+            "Drove enterprise adoption of AI-assisted developer tools and platform strategy.",
           ],
         },
         {
@@ -156,6 +170,7 @@
   .company-logo {
     border-radius: 4px;
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   h3 {
