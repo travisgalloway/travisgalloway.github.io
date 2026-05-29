@@ -1,20 +1,34 @@
 <script>
   const companies = [
     {
-      name: "Target",
-      logo: "/images/target.png",
-      period: "Nov 2019 – Present",
+      name: "CVS Health",
+      logo: "/images/cvs.png",
+      period: "Apr 2026 – Present",
       roles: [
         {
-          title: "Senior Engineering Manager, Platform AI & Compute Platform",
-          period: "Aug 2022 – Present",
+          title: "Lead Director - Developer Tooling",
+          period: "Apr 2026 – Present",
           points: [
-            "Lead engineering teams across platform infrastructure and AI initiatives.",
-            "Driving enterprise adoption of AI-assisted developer tools and platform strategy.",
+            "Lead CI/CD teams.",
+          ],
+        },
+      ],
+    },
+    {
+      name: "Target",
+      logo: "/images/target.png",
+      period: "Nov 2019 – Apr 2026",
+      roles: [
+        {
+          title: "Senior Engineering Manager - Compute Platform & Platform AI",
+          period: "Aug 2022 – Apr 2026",
+          points: [
+            "Built AI-assisted tooling for the developer platform.",
+            "Designed and launched a new VM platform service.",
           ],
         },
         {
-          title: "Lead Software Engineer, Managed Containers",
+          title: "Lead Software Engineer - Managed Containers",
           period: "Oct 2020 – Aug 2022",
           points: [
             "Led backend development for a managed container platform.",
@@ -22,7 +36,7 @@
           ],
         },
         {
-          title: "Senior Software Engineer, Managed Containers",
+          title: "Senior Software Engineer - Managed Containers",
           period: "Nov 2019 – Oct 2020",
           points: [
             "Extended platform services to support cloud and multi-region deployments.",
@@ -37,7 +51,7 @@
       period: "Dec 2017 – Oct 2019",
       roles: [
         {
-          title: "Senior Software Engineer, Rules & Behaviors",
+          title: "Senior Software Engineer - Rules & Behaviors",
           period: "Dec 2017 – Oct 2019",
           points: [
             "Developed backend services for an IoT platform, handling storage and execution of user-defined automations.",
@@ -52,14 +66,14 @@
       period: "Apr 2015 – Dec 2021",
       roles: [
         {
-          title: "Adjunct Instructor, Computer Science",
+          title: "Adjunct Instructor - Computer Science",
           period: "2016 – 2021",
           points: [
             "Taught a senior capstone course, partnering with corporate sponsors to scope real-world projects.",
           ],
         },
         {
-          title: "Web Application Developer, Education Technology",
+          title: "Web Application Developer - Education Technology",
           period: "2015 – 2017",
           points: [
             "Built instructional tools including a video annotation platform.",
@@ -156,6 +170,7 @@
   .company-logo {
     border-radius: 4px;
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   h3 {
